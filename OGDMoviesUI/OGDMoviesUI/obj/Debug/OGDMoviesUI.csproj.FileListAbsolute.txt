@@ -90,7 +90,6 @@ D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\bin\Microsoft.AI.DependencyCollector.xml
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\bin\Microsoft.AI.WindowsServer.xml
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\bin\Microsoft.AI.Web.xml
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\obj\Debug\OGDMoviesUI.csprojAssemblyReference.cache
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\obj\Debug\OGDMoviesUI.csproj.CoreCompileInputs.cache
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\obj\Debug\OGDMoviesUI.csproj.CopyComplete
 D:\OGD\OGD\OGDMoviesUI\OGDMoviesUI\obj\Debug\OGDMoviesUI.dll
