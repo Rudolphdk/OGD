@@ -64,7 +64,7 @@ namespace OGDMovies.Api.Models
                 Title = this.title,
                 ReleaseDate = this.release_date,
                 Plot = this.overview,
-                ImageUrl = this.poster_path,
+                ImageUrl = $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{this.poster_path}",
                 Runtime = this.runtime,
                 Ratings = new List<CombinedModel.Rating>()
                 {

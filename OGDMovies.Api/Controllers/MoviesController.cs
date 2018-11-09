@@ -33,9 +33,6 @@ namespace OGDMovies.Api.Controllers
         /// <returns></returns>
         public IHttpActionResult GetById(DatabaseRepo dbRepo, string id)
         {
-            //int.TryParse(page, out var pageNr);
-            //JObject json = JObject.Parse("hello");
-            
             switch (dbRepo)
             {
                 case DatabaseRepo.Tmdb:

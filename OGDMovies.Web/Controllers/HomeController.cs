@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OGDMovies.Api;
+using OGDMovies.Api.Controllers;
+using OGDMovies.Common.Enums;
 
 namespace OGDMovies.Web.Controllers
 {
@@ -12,18 +15,20 @@ namespace OGDMovies.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Popular()
         {
-            ViewBag.Message = "Your application description page.";
-
+            return PartialView("_VerticalList");
+        }
+        public ActionResult TopRated()
+        {
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult LatestRelease()
         {
-            ViewBag.Message = "Your contact page.";
-
+            return View();
+        }
+        public ActionResult Search()
+        {
             return View();
         }
     }

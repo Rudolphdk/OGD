@@ -184,16 +184,16 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ConnectionRepos\IConnectionBase.cs" />
-    <Compile Include="ConnectionRepos\OMDBConnection.cs" />
+    <Compile Include="ConnectionRepos\OmdbConnection.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CombinedModel.cs" />
-    <Compile Include="Models\TMDBModels.cs" />
-    <Compile Include="Models\OMDBModel.cs" />
+    <Compile Include="Models\TmdbModels.cs" />
+    <Compile Include="Models\OmdbModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ConnectionRepos\TMDBConnection.cs" />
+    <Compile Include="ConnectionRepos\TmdbConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

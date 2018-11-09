@@ -31,7 +31,7 @@ namespace OGDMovies.Api.ConnectionRepos
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(Url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync($"movie/{query}").Result;
+            HttpResponseMessage response = client.GetAsync($"{query}").Result;
             if (response.IsSuccessStatusCode)
             {
                 if (expectMultiple)
@@ -51,35 +51,35 @@ namespace OGDMovies.Api.ConnectionRepos
 
         public CombinedModel GetMovieById(string id)
         {
-            var query = $"?api_key={Key}&i={id}";
+            var query = $"movie/?api_key={Key}&i={id}";
             var tmdbModel = RetrieveData(query) as TmdbModel;
             return tmdbModel?.MapToCombined();
         }
 
         public CombinedModelList GetMovieByTitle(string title)
         {
-            var query = $"?api_key={Key}&t={title}";
+            var query = $"search/movie?api_key={Key}&query={title}&include_adult=true";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }
 
         public CombinedModelList GetPopularMovies(string page)
         {
-            var query = $"popular?api_key={Key}&page={page}";
+            var query = $"movie/popular?api_key={Key}&page={page}";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }
 
         public CombinedModel GetLatestMovie(string page)
         {
-            var query = $"latest?api_key={Key}&page={page}";
+            var query = $"movie/latest?api_key={Key}&page={page}";
             var tmdbModel = RetrieveData(query) as TmdbModel;
             return tmdbModel?.MapToCombined();
         }
 
         public CombinedModelList GetTopRatedMovies(string page)
         {
-            var query = $"top_rated?api_key={Key}&page={page}";
+            var query = $"movie/top_rated?api_key={Key}&page={page}";
 
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
