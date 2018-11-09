@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.Models
 {

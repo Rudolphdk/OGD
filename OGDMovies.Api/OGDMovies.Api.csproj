@@ -189,7 +189,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CombinedModel.cs" />
     <Compile Include="Models\TmdbModels.cs" />
     <Compile Include="Models\OmdbModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

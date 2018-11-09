@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using OGDMovies.Api.Models;
+using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
