@@ -5,10 +5,9 @@ using System.Web;
 
 namespace OGDMovies.Api.Models
 {
-    public class OmdbModelList
-    {
-        
-    }
+    /// <summary>
+    /// This is the result model received from OMDB
+    /// </summary>
     public class OmdbModel
     {
         public string imdbID { get; set; }
@@ -16,7 +15,7 @@ namespace OGDMovies.Api.Models
         public int Year { get; set; }
         public string Rated { get; set; }
         public string Released { get; set; }
-        public string  Runtime { get; set; }
+        public string Runtime { get; set; }
         public string Genre { get; set; }
         public string Director { get; set; }
         public string Writer { get; set; }
@@ -26,16 +25,8 @@ namespace OGDMovies.Api.Models
         public string Country { get; set; }
         public string Awards { get; set; }
         public string Poster { get; set; }
-        //"Ratings": [{
-        //    "Source": "Internet Movie Database",
-        //    "Value": "7.5/10"
-
-        //},
-        //{
-        //    "Source": "Rotten Tomatoes",
-        //    "Value": "65%"
-        //}],
-        //"Metascore": "N/A",
+        public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
+        public string Metascore { get; set; }
         public string imdbRating { get; set; }
         public string imdbVotes { get; set; }
         public string Type { get; set; }
@@ -44,5 +35,11 @@ namespace OGDMovies.Api.Models
         public string Production { get; set; }
         public string Website { get; set; }
         public string Response { get; set; }
+    }
+
+    public class Rating
+    {
+        public string Source { get; set; }
+        public string Value { get; set; }
     }
 }

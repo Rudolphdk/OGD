@@ -34,7 +34,6 @@ namespace OGDMovies.Api.ConnectionRepos
             HttpResponseMessage response = client.GetAsync($"movie/{query}").Result;
             if (response.IsSuccessStatusCode)
             {
-                //var stringResult = response.Content.ReadAsStringAsync().Result;
                 if (expectMultiple)
                 {
                     return response.Content.ReadAsAsync<TmdbModelList>().Result;

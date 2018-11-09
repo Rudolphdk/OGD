@@ -40,10 +40,10 @@ namespace OGDMovies.Api.Controllers
             {
                 case DatabaseRepo.Tmdb:
                     var tmdbResult = _tmdbConnection.GetMovieById(id);
-                    return Json(new { tmdbResult });
+                    return Json(new { result = tmdbResult });
                 case DatabaseRepo.Omdb:
                     var omdbResult = _omdbConnection.GetMovieById(id);
-                    return Json(new { omdbResult });
+                    return Json(new { result = omdbResult });
                 default:
                     throw new Exception("Incorret DB Type");
             }
@@ -61,10 +61,10 @@ namespace OGDMovies.Api.Controllers
             {
                 case DatabaseRepo.Tmdb:
                     var tmdbResult = _tmdbConnection.GetMovieByTitle(title);
-                    return Json(new { tmdbResult });
+                    return Json(new { result = tmdbResult });
                 case DatabaseRepo.Omdb:
                     var omdbResult = _omdbConnection.GetMovieByTitle(title);
-                    return Json(new { omdbResult });
+                    return Json(new { result = omdbResult });
                 default:
                     throw new Exception("Incorret DB Type");
             }
@@ -82,13 +82,13 @@ namespace OGDMovies.Api.Controllers
             {
                 case MovieRelevance.Latest:
                     var latestMovie = _tmdbConnection.GetLatestMovie(page);
-                    return Json(new { latestMovie });
+                    return Json(new { result = latestMovie });
                 case MovieRelevance.Popular:
                     var popularMovies = _tmdbConnection.GetPopularMovies(page);
-                    return Json(new { popularMovies });
+                    return Json(new { result = popularMovies });
                 case MovieRelevance.TopRated:
                     var topRated = _tmdbConnection.GetTopRatedMovies(page);
-                    return Json(new { topRated });
+                    return Json(new { result = topRated });
                 default:
                     throw new Exception("Incorret Relevance Type");
             }

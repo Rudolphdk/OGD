@@ -9,7 +9,7 @@ using OGDMovies.Api.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface IOmdbConnection : IConnectionBase<OmdbModel, OmdbModelList>
+    public interface IOmdbConnection : IConnectionBase<OmdbModel, OmdbModel>
     {
     }
     public class OmdbConnection : IOmdbConnection
@@ -32,16 +32,7 @@ namespace OGDMovies.Api.ConnectionRepos
             HttpResponseMessage response = client.GetAsync($"?apikey={Key}&{query}").Result;
             if (response.IsSuccessStatusCode)
             {
-
-                string responseString = response.Content.ReadAsStringAsync().Result;
-                return responseString;
-                //var modelObject = response.Content.ReadAsAsync<Student>().Result;
-
-                //var data = response.Content.ReadAsAsync<IEnumerable<YourClass>>().Result;
-                //foreach (var x in data)
-                //{
-                //    //Call your store method and pass in your own object
-                //}
+                return response.Content.ReadAsAsync<OmdbModel>().Result;
             }
             else
             {
@@ -49,13 +40,23 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
+        /// <summary>
+        /// Returns a single search result
+        /// </summary>
+        /// <param name="id">The Movie Id</param>
+        /// <returns></returns>
         public OmdbModel GetMovieById(string id)
         {
             var query = $"i={id}";
             return RetrieveData(query);
         }
 
-        public OmdbModelList GetMovieByTitle(string title)
+        /// <summary>
+        /// Returns a single search result
+        /// </summary>
+        /// <param name="title">The Movie Title</param>
+        /// <returns></returns>
+        public OmdbModel GetMovieByTitle(string title)
         {
             var query = $"t={title}";
             return RetrieveData(query);

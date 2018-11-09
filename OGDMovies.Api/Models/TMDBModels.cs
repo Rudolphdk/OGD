@@ -12,6 +12,10 @@ namespace OGDMovies.Api.Models
         public string total_pages { get; set; }
         public IEnumerable<TmdbModel> results { get; set; } = new List<TmdbModel>();
     }
+
+    /// <summary>
+    /// This is the result model received from TMDB
+    /// </summary>
     public class TmdbModel
     {
         public string adult { get; set; }
