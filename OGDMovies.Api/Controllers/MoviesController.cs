@@ -17,50 +17,81 @@ namespace OGDMovies.Api.Controllers
     {
         private readonly ITmdbConnection _tmdbConnection;
         private readonly IOmdbConnection _omdbConnection;
+
+        //Constructor used for Dependency Injection
         public MoviesController(ITmdbConnection tmdbConnection, IOmdbConnection omdbConnection)
         {
             this._tmdbConnection = tmdbConnection;
             this._omdbConnection = omdbConnection;
         }
-
-        // GET api/movies
-        public IEnumerable<string> GetAll()
-        {
-            return new string[] { "TMDB", "IMDB" };
-        }
         
-        public string GetAllMoviesByDbRepo(DatabaseRepo dbRepo, string page = "1")
+        /// <summary>
+        /// Returns the retrieved movies information by an Id
+        /// </summary>
+        /// <param name="dbRepo">The movie database to search from</param>
+        /// <param name="id">The Movie Id</param>
+        /// <returns></returns>
+        public IHttpActionResult GetById(DatabaseRepo dbRepo, string id)
         {
-            int.TryParse(page, out var pageNr);
-
+            //int.TryParse(page, out var pageNr);
             //JObject json = JObject.Parse("hello");
+            
             switch (dbRepo)
             {
-                case DatabaseRepo.All:
-                    _tmdbConnection.Page = pageNr;
-                    _omdbConnection.Page = pageNr;
-                    var tmdbResults = _tmdbConnection.RetrieveData();
-                    var omdbResults = _omdbConnection.RetrieveData();
-                    //Todo: combine results
-                    return "";
                 case DatabaseRepo.Tmdb:
-                    _tmdbConnection.Page = pageNr;
-                    return _tmdbConnection.RetrieveData();
+                    var tmdbResult = _tmdbConnection.GetMovieById(id);
+                    return Json(new { tmdbResult });
                 case DatabaseRepo.Omdb:
-                    _omdbConnection.Page = pageNr;
-                    var resultString = _omdbConnection.RetrieveData();
-                    var obj   = JsonConvert.DeserializeObject<OmdbModel>(resultString);
-                    return resultString;
+                    var omdbResult = _omdbConnection.GetMovieById(id);
+                    return Json(new { omdbResult });
                 default:
                     throw new Exception("Incorret DB Type");
             }
-           
         }
 
-        // GET api/movies/5
-        public string Get(int movieId, DatabaseRepo dbRepo)
+        /// <summary>
+        /// Returns the retrieved movies information by an Id
+        /// </summary>
+        /// <param name="dbRepo">The movie database to search from</param>
+        /// <param name="title">The Movie Title</param>
+        /// <returns></returns>
+        public IHttpActionResult GetByTitle(DatabaseRepo dbRepo, string title)
         {
-            return "movie5";
+            switch (dbRepo)
+            {
+                case DatabaseRepo.Tmdb:
+                    var tmdbResult = _tmdbConnection.GetMovieByTitle(title);
+                    return Json(new { tmdbResult });
+                case DatabaseRepo.Omdb:
+                    var omdbResult = _omdbConnection.GetMovieByTitle(title);
+                    return Json(new { omdbResult });
+                default:
+                    throw new Exception("Incorret DB Type");
+            }
+        }
+
+        /// <summary>
+        /// Returns the retrieved resuls according to the selected relevance
+        /// </summary>
+        /// <param name="relevance">ie. Latest, Popular, Top Rated</param>
+        /// <param name="page">The Result Page</param>
+        /// <returns></returns>
+        public IHttpActionResult GetByRelevance(MovieRelevance relevance, string page = "1")
+        {
+            switch (relevance)
+            {
+                case MovieRelevance.Latest:
+                    var latestMovie = _tmdbConnection.GetLatestMovie(page);
+                    return Json(new { latestMovie });
+                case MovieRelevance.Popular:
+                    var popularMovies = _tmdbConnection.GetPopularMovies(page);
+                    return Json(new { popularMovies });
+                case MovieRelevance.TopRated:
+                    var topRated = _tmdbConnection.GetTopRatedMovies(page);
+                    return Json(new { topRated });
+                default:
+                    throw new Exception("Incorret Relevance Type");
+            }
         }
 
         // POST api/movies

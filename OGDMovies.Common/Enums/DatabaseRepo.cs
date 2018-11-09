@@ -7,8 +7,6 @@ namespace OGDMovies.Common.Enums
 {
     public enum DatabaseRepo : byte
     {
-        [Display(Name = "All Movie Databases")]
-        All = 0,
         [Display(Name = "The Movie Database (TMDB)")]
         Tmdb = 1,
         [Display(Name = "OMDb")]

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
+using OGDMovies.Api.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface IOmdbConnection : IConnectionBase
+    public interface IOmdbConnection : IConnectionBase<OmdbModel, OmdbModelList>
     {
     }
     public class OmdbConnection : IOmdbConnection
     {
         public string Key { get; private set; }
         public string Url { get; private set; }
-        public int Page { get; set; } = 1;
 
         //constructor
         public OmdbConnection()
@@ -23,12 +24,12 @@ namespace OGDMovies.Api.ConnectionRepos
             Url = System.Configuration.ConfigurationManager.AppSettings["OMDB_API_URL"];
         }
 
-        public string RetrieveData()
+        public dynamic RetrieveData(string query, bool expectMultiple = false)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(Url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync($"?i=tt0091530&apikey={Key}&page={Page}").Result;
+            HttpResponseMessage response = client.GetAsync($"?apikey={Key}&{query}").Result;
             if (response.IsSuccessStatusCode)
             {
 
@@ -48,6 +49,17 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
-        
+        public OmdbModel GetMovieById(string id)
+        {
+            var query = $"i={id}";
+            return RetrieveData(query);
+        }
+
+        public OmdbModelList GetMovieByTitle(string title)
+        {
+            var query = $"t={title}";
+            return RetrieveData(query);
+        }
+
     }
 }

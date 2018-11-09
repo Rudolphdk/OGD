@@ -6,11 +6,12 @@ using System.Web;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface IConnectionBase
+    public interface IConnectionBase<out T,out TR>
     {
         string Key { get; }
         string Url { get; }
-        int Page { get; set; }
-        string RetrieveData();
+        dynamic RetrieveData(string query, bool expectMultiple);
+        T GetMovieById(string id);
+        TR GetMovieByTitle(string title);
     }
 }

@@ -5,6 +5,10 @@ using System.Web;
 
 namespace OGDMovies.Api.Models
 {
+    public class OmdbModelList
+    {
+        
+    }
     public class OmdbModel
     {
         public string imdbID { get; set; }

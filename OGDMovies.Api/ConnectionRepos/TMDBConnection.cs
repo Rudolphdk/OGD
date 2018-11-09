@@ -4,17 +4,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
+using OGDMovies.Api.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface ITmdbConnection : IConnectionBase
+    public interface ITmdbConnection : IConnectionBase<TmdbModel, TmdbModelList>
     {
+        TmdbModelList GetPopularMovies(string page);
+        TmdbModel GetLatestMovie(string page);
+        TmdbModelList GetTopRatedMovies(string page);
     }
     public class TmdbConnection : ITmdbConnection
     {
         public string Key { get; private set; }
         public string Url { get; private set; }
-        public int Page { get; set; } = 1;
 
         //constructor
         public TmdbConnection()
@@ -23,24 +26,23 @@ namespace OGDMovies.Api.ConnectionRepos
             Url = System.Configuration.ConfigurationManager.AppSettings["TMDB_API_URL"];
         }
 
-        public string RetrieveData()
+        public dynamic RetrieveData(string query, bool expectMultiple = false)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(Url);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync($"movie/popular?api_key={Key}&page={Page}").Result;
+            HttpResponseMessage response = client.GetAsync($"movie/{query}").Result;
             if (response.IsSuccessStatusCode)
             {
-
-                string responseString = response.Content.ReadAsStringAsync().Result;
-                return responseString;
-                //var modelObject = response.Content.ReadAsAsync<Student>().Result;
-
-                //var data = response.Content.ReadAsAsync<IEnumerable<YourClass>>().Result;
-                //foreach (var x in data)
-                //{
-                //    //Call your store method and pass in your own object
-                //}
+                //var stringResult = response.Content.ReadAsStringAsync().Result;
+                if (expectMultiple)
+                {
+                    return response.Content.ReadAsAsync<TmdbModelList>().Result;
+                }
+                else
+                {
+                    return response.Content.ReadAsAsync<TmdbModel>().Result;
+                }
             }
             else
             {
@@ -48,6 +50,34 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
+        public TmdbModel GetMovieById(string id)
+        {
+            var query = $"?api_key={Key}&i={id}";
+            return RetrieveData(query);
+        }
 
+        public TmdbModelList GetMovieByTitle(string title)
+        {
+            var query = $"?api_key={Key}&t={title}";
+            return RetrieveData(query, true);
+        }
+
+        public TmdbModelList GetPopularMovies(string page)
+        {
+            var query = $"popular?api_key={Key}&page={page}";
+            return RetrieveData(query, true);
+        }
+
+        public TmdbModel GetLatestMovie(string page)
+        {
+            var query = $"latest?api_key={Key}&page={page}";
+            return RetrieveData(query);
+        }
+
+        public TmdbModelList GetTopRatedMovies(string page)
+        {
+            var query = $"top_rated?api_key={Key}&page={page}";
+            return RetrieveData(query, true);
+        }
     }
 }
