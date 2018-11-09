@@ -8,11 +8,11 @@ using OGDMovies.Api.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface ITmdbConnection : IConnectionBase<TmdbModel, TmdbModelList>
+    public interface ITmdbConnection : IConnectionBase<CombinedModel, CombinedModelList>
     {
-        TmdbModelList GetPopularMovies(string page);
-        TmdbModel GetLatestMovie(string page);
-        TmdbModelList GetTopRatedMovies(string page);
+        CombinedModelList GetPopularMovies(string page);
+        CombinedModel GetLatestMovie(string page);
+        CombinedModelList GetTopRatedMovies(string page);
     }
     public class TmdbConnection : ITmdbConnection
     {
@@ -49,34 +49,40 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
-        public TmdbModel GetMovieById(string id)
+        public CombinedModel GetMovieById(string id)
         {
             var query = $"?api_key={Key}&i={id}";
-            return RetrieveData(query);
+            var tmdbModel = RetrieveData(query) as TmdbModel;
+            return tmdbModel?.MapToCombined();
         }
 
-        public TmdbModelList GetMovieByTitle(string title)
+        public CombinedModelList GetMovieByTitle(string title)
         {
             var query = $"?api_key={Key}&t={title}";
-            return RetrieveData(query, true);
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToCombinedList();
         }
 
-        public TmdbModelList GetPopularMovies(string page)
+        public CombinedModelList GetPopularMovies(string page)
         {
             var query = $"popular?api_key={Key}&page={page}";
-            return RetrieveData(query, true);
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToCombinedList();
         }
 
-        public TmdbModel GetLatestMovie(string page)
+        public CombinedModel GetLatestMovie(string page)
         {
             var query = $"latest?api_key={Key}&page={page}";
-            return RetrieveData(query);
+            var tmdbModel = RetrieveData(query) as TmdbModel;
+            return tmdbModel?.MapToCombined();
         }
 
-        public TmdbModelList GetTopRatedMovies(string page)
+        public CombinedModelList GetTopRatedMovies(string page)
         {
             var query = $"top_rated?api_key={Key}&page={page}";
-            return RetrieveData(query, true);
+
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToCombinedList();
         }
     }
 }

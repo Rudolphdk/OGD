@@ -12,7 +12,7 @@ namespace OGDMovies.Api.Models
     {
         public string imdbID { get; set; }
         public string Title { get; set; }
-        public int Year { get; set; }
+        public string Year { get; set; }
         public string Rated { get; set; }
         public string Released { get; set; }
         public string Runtime { get; set; }
@@ -35,11 +35,26 @@ namespace OGDMovies.Api.Models
         public string Production { get; set; }
         public string Website { get; set; }
         public string Response { get; set; }
-    }
 
-    public class Rating
-    {
-        public string Source { get; set; }
-        public string Value { get; set; }
+        public class Rating
+        {
+            public string Source { get; set; }
+            public string Value { get; set; }
+        }
+
+        public CombinedModel MapToCombined()
+        {
+            return new CombinedModel()
+            {
+                ImdbId = this.imdbID,
+                Title = this.Title,
+                ReleaseDate = this.Released,
+                Plot = this.Plot,
+                ImageUrl = this.Poster,
+                Runtime = this.Runtime,
+                Ratings = this.Ratings.Select(s => new CombinedModel.Rating(){Source = s.Source, Value = s.Value})
+            };
+        }
     }
+    
 }
