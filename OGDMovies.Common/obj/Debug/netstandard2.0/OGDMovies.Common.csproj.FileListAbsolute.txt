@@ -1,0 +1,15 @@
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\OGDMovies.Common.deps.json
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\OGDMovies.Common.dll
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\OGDMovies.Common.pdb
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.csproj.CoreCompileInputs.cache
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.AssemblyInfoInputs.cache
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.AssemblyInfo.cs
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.dll
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.pdb
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.dll
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.Configuration.dll
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.Security.dll
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.ComponentModel.DataAnnotations.xml
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.Configuration.xml
+D:\OGD\OGD\OGDMovies.Common\bin\Debug\netstandard2.0\System.Security.xml
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.csproj.CopyComplete

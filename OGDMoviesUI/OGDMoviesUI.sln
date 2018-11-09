@@ -3,9 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGDMoviesUI", "OGDMoviesUI\OGDMoviesUI.csproj", "{740D1DAE-B081-4FE0-A4E2-594B3C7DEDE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGDMovies.Common", "..\OGDMovies.Common\OGDMovies.Common.csproj", "{A66B9939-43BB-484D-82E7-E24692F272B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGDMoviesAPI", "..\OGDMoviesAPI\OGDMoviesAPI.csproj", "{979823A6-3BC0-48EF-AA2F-52EC5B10F9D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGDMovies.Api", "..\OGDMovies.Api\OGDMovies.Api.csproj", "{04022E1C-469F-4F27-BF16-86222BD448BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A66B9939-43BB-484D-82E7-E24692F272B4} = {A66B9939-43BB-484D-82E7-E24692F272B4}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGDMovies.Web", "..\OGDMovies.Web\OGDMovies.Web.csproj", "{1982A778-E7F3-4297-8094-5ED8C138B35C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{04022E1C-469F-4F27-BF16-86222BD448BC} = {04022E1C-469F-4F27-BF16-86222BD448BC}
+		{A66B9939-43BB-484D-82E7-E24692F272B4} = {A66B9939-43BB-484D-82E7-E24692F272B4}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +22,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{740D1DAE-B081-4FE0-A4E2-594B3C7DEDE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{740D1DAE-B081-4FE0-A4E2-594B3C7DEDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{740D1DAE-B081-4FE0-A4E2-594B3C7DEDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{740D1DAE-B081-4FE0-A4E2-594B3C7DEDE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{979823A6-3BC0-48EF-AA2F-52EC5B10F9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{979823A6-3BC0-48EF-AA2F-52EC5B10F9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{979823A6-3BC0-48EF-AA2F-52EC5B10F9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{979823A6-3BC0-48EF-AA2F-52EC5B10F9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A66B9939-43BB-484D-82E7-E24692F272B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66B9939-43BB-484D-82E7-E24692F272B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66B9939-43BB-484D-82E7-E24692F272B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66B9939-43BB-484D-82E7-E24692F272B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04022E1C-469F-4F27-BF16-86222BD448BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04022E1C-469F-4F27-BF16-86222BD448BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04022E1C-469F-4F27-BF16-86222BD448BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04022E1C-469F-4F27-BF16-86222BD448BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1982A778-E7F3-4297-8094-5ED8C138B35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1982A778-E7F3-4297-8094-5ED8C138B35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1982A778-E7F3-4297-8094-5ED8C138B35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1982A778-E7F3-4297-8094-5ED8C138B35C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
