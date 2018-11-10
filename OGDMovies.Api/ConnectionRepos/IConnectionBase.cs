@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface IConnectionBase<out T,out TR>
+    public interface IConnectionBase
     {
         string Key { get; }
         string Url { get; }
         dynamic RetrieveData(string query, bool expectMultiple);
-        T GetMovieById(string id);
-        TR GetMovieByTitle(string title);
+        AggregatedModel GetMovieById(string id);
+        AggregatedModel GetMovieByTitle(string title);
     }
 }

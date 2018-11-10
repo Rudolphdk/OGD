@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using OGDMovies.Api;
-using OGDMovies.Api.Controllers;
 using OGDMovies.Common.Enums;
 using OGDMovies.Common.Models;
 
@@ -24,7 +22,7 @@ namespace OGDMovies.Web.Controllers
         string Baseurl = "http://localhost:12006/";
         public async Task<ActionResult> Popular()
         {
-            CombinedModelList popularMovies = new CombinedModelList();
+            AggregatedModel popularMovies = new AggregatedModel();
 
             using (var client = new HttpClient())
             {
@@ -45,7 +43,7 @@ namespace OGDMovies.Web.Controllers
                     var EmpResponse = Res.Content.ReadAsStringAsync().Result;
 
                     //Deserializing the response recieved from web api and storing into the Employee list  
-                    popularMovies = JsonConvert.DeserializeObject<CombinedModelList>(EmpResponse);
+                    popularMovies = JsonConvert.DeserializeObject<AggregatedModel>(EmpResponse);
 
                 }
                 //returning the employee list to view  

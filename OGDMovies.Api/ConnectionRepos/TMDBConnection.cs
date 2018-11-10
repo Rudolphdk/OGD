@@ -9,11 +9,11 @@ using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface ITmdbConnection : IConnectionBase<CombinedModel, CombinedModelList>
+    public interface ITmdbConnection : IConnectionBase
     {
-        CombinedModelList GetPopularMovies(string page);
-        CombinedModel GetLatestMovie(string page);
-        CombinedModelList GetTopRatedMovies(string page);
+        AggregatedModel GetPopularMovies(string page);
+        AggregatedModel GetLatestMovie(string page);
+        AggregatedModel GetTopRatedMovies(string page);
     }
     public class TmdbConnection : ITmdbConnection
     {
@@ -50,35 +50,47 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
-        public CombinedModel GetMovieById(string id)
+        public AggregatedModel GetMovieById(string id)
         {
             var query = $"movie/?api_key={Key}&i={id}";
             var tmdbModel = RetrieveData(query) as TmdbModel;
-            return tmdbModel?.MapToCombined();
+            return new AggregatedModel()
+            {
+                MovieResults = new List<MoviesModel>
+                {
+                    tmdbModel?.MapToMoviesModel()
+                }
+            };
         }
 
-        public CombinedModelList GetMovieByTitle(string title)
+        public AggregatedModel GetMovieByTitle(string title)
         {
             var query = $"search/movie?api_key={Key}&query={title}&include_adult=true";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }
 
-        public CombinedModelList GetPopularMovies(string page)
+        public AggregatedModel GetPopularMovies(string page)
         {
             var query = $"movie/popular?api_key={Key}&page={page}";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }
 
-        public CombinedModel GetLatestMovie(string page)
+        public AggregatedModel GetLatestMovie(string page)
         {
             var query = $"movie/latest?api_key={Key}&page={page}";
             var tmdbModel = RetrieveData(query) as TmdbModel;
-            return tmdbModel?.MapToCombined();
+            return new AggregatedModel()
+            {
+                MovieResults = new List<MoviesModel>
+                {
+                    tmdbModel?.MapToMoviesModel()
+                }
+            };
         }
 
-        public CombinedModelList GetTopRatedMovies(string page)
+        public AggregatedModel GetTopRatedMovies(string page)
         {
             var query = $"movie/top_rated?api_key={Key}&page={page}";
 

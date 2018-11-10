@@ -13,14 +13,14 @@ namespace OGDMovies.Api.Models
         public string total_pages { get; set; }
         public IEnumerable<TmdbModel> results { get; set; } = new List<TmdbModel>();
 
-        public CombinedModelList MapToCombinedList()
+        public AggregatedModel MapToCombinedList()
         {
-            return new CombinedModelList()
+            return new AggregatedModel()
             {
                 Page = this.page,
                 TotalResults = this.total_results,
                 TotalPages = this.total_pages,
-                Results = this.results.Select(s => s.MapToCombined())
+                MovieResults = this.results.Select(s => s.MapToMoviesModel())
             };
         }
     }
@@ -56,9 +56,9 @@ namespace OGDMovies.Api.Models
         public string vote_average { get; set; }
         public string vote_count { get; set; }
 
-        public CombinedModel MapToCombined()
+        public MoviesModel MapToMoviesModel()
         {
-            return new CombinedModel()
+            return new MoviesModel()
             {
                 Id = this.id,
                 ImdbId = this.imdb_id,
@@ -67,9 +67,9 @@ namespace OGDMovies.Api.Models
                 Plot = this.overview,
                 ImageUrl = $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{this.poster_path}",
                 Runtime = this.runtime,
-                Ratings = new List<CombinedModel.Rating>()
+                Ratings = new List<MoviesModel.Rating>()
                 {
-                    new CombinedModel.Rating() {Source = "IMDB", Value = this.vote_average}
+                    new MoviesModel.Rating() {Source = "IMDB", Value = this.vote_average}
                 }
             };
         }

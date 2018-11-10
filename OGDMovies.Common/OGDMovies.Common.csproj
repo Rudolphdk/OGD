@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.36.1.1226" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Google.Apis.YouTube.v3">
+      <HintPath>..\OGDMoviesUI\packages\Google.Apis.YouTube.v3.1.36.1.1226\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.1\System.ComponentModel.DataAnnotations.dll</HintPath>
     </Reference>

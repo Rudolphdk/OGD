@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Google.Apis.YouTube.v3.Data;
 
 namespace OGDMovies.Common.Models
 {
-    public class CombinedModelList
+    public class AggregatedModel
     {
         public string Page { get; set; }
         public string TotalResults { get; set; }
         public string TotalPages { get; set; }
-        public IEnumerable<CombinedModel> Results { get; set; } = new List<CombinedModel>();
+        public IEnumerable<MoviesModel> MovieResults { get; set; } = new List<MoviesModel>();
+        public IEnumerable<SearchResult> YoutubeResults { get; set; } = new List<SearchResult>();
     }
 
-    public class CombinedModel
+    public class MoviesModel
     {
         public string Id { get; set; }
         public string ImdbId { get; set; }

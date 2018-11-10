@@ -43,9 +43,9 @@ namespace OGDMovies.Api.Models
             public string Value { get; set; }
         }
 
-        public CombinedModel MapToCombined()
+        public MoviesModel MapToCombined()
         {
-            return new CombinedModel()
+            return new MoviesModel()
             {
                 ImdbId = this.imdbID,
                 Title = this.Title,
@@ -53,7 +53,7 @@ namespace OGDMovies.Api.Models
                 Plot = this.Plot,
                 ImageUrl = this.Poster,
                 Runtime = this.Runtime,
-                Ratings = this.Ratings.Select(s => new CombinedModel.Rating(){Source = s.Source, Value = s.Value})
+                Ratings = this.Ratings.Select(s => new MoviesModel.Rating(){Source = s.Source, Value = s.Value})
             };
         }
     }

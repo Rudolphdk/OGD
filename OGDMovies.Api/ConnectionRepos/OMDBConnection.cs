@@ -10,7 +10,7 @@ using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
-    public interface IOmdbConnection : IConnectionBase<CombinedModel, CombinedModel>
+    public interface IOmdbConnection : IConnectionBase
     {
     }
     public class OmdbConnection : IOmdbConnection
@@ -41,28 +41,30 @@ namespace OGDMovies.Api.ConnectionRepos
             }
         }
 
-        /// <summary>
-        /// Returns a single search result
-        /// </summary>
-        /// <param name="id">The Movie Id</param>
-        /// <returns></returns>
-        public CombinedModel GetMovieById(string id)
+        public AggregatedModel GetMovieById(string id)
         {
             var query = $"i={id}";
             var omdbModel = RetrieveData(query) as OmdbModel;
-            return omdbModel?.MapToCombined();
+            return new AggregatedModel()
+            {
+                MovieResults = new List<MoviesModel>
+                {
+                    omdbModel?.MapToCombined()
+                }
+            };
         }
 
-        /// <summary>
-        /// Returns a single search result
-        /// </summary>
-        /// <param name="title">The Movie Title</param>
-        /// <returns></returns>
-        public CombinedModel GetMovieByTitle(string title)
+        public AggregatedModel GetMovieByTitle(string title)
         {
             var query = $"t={title}";
             var omdbModel = RetrieveData(query) as OmdbModel;
-            return omdbModel?.MapToCombined();
+            return new AggregatedModel()
+            {
+                MovieResults = new List<MoviesModel>
+                {
+                    omdbModel?.MapToCombined()
+                }
+            };
         }
 
     }

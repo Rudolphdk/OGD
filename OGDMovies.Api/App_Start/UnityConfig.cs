@@ -44,6 +44,7 @@ namespace OGDMovies.Api
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IOmdbConnection, OmdbConnection>();
             container.RegisterType<ITmdbConnection, TmdbConnection>();
+            container.RegisterType<IYoutubeConnection, YoutubeConnection>();
             
         }
     }
