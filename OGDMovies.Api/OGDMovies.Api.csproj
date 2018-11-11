@@ -213,6 +213,7 @@
     <Compile Include="ConnectionRepos\IConnectionBase.cs" />
     <Compile Include="ConnectionRepos\OmdbConnection.cs" />
     <Compile Include="ConnectionRepos\YoutubeConnection.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -244,6 +245,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

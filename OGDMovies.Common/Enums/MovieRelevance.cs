@@ -9,9 +9,11 @@ namespace OGDMovies.Common.Enums
     {
         [Display(Name = "Most Popular")]
         Popular = 1,
-        [Display(Name = "Latest Releases")]
-        Latest = 2,
+        [Display(Name = "Trending")]
+        Trending = 2,
         [Display(Name = "Top Rated")]
-        TopRated = 3
+        TopRated = 3,
+        [Display(Name = "Upcomming")]
+        Upcomming = 4
     }
 }

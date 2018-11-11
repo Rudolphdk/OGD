@@ -4,8 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        #topnav .search-container {
+            float: right;
+        }
+
+        #topnav #search {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+        }
+
+        #topnav .search-container button {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+            #topnav .search-container button:hover {
+                background: #ccc;
+            }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -18,14 +46,19 @@
                 </button>
                 @Html.ActionLink("OGD Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Popular", "Popular", "Home")</li>
-                    <li>@Html.ActionLink("Top Rated", "TopRated", "Home")</li>
-                    <li>@Html.ActionLink("Latest Release", "LatestRelease", "Home")</li>
-                    <li>@Html.ActionLink("Search", "Search", "Home")</li>
-                </ul>
+            <div id="topnav" class="navbar-collapse collapse">
+                <div class="search-container" >
+                    <form method="post" action="@Url.Action("Search", "Home")">
+                        <input id="search" type="text" placeholder="Search.." name="query">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Popular", "Popular", "Home")</li>
+                        <li>@Html.ActionLink("Top Rated", "TopRated", "Home")</li>
+                        <li>@Html.ActionLink("Trending", "Trending", "Home")</li>
+                        <li>@Html.ActionLink("Upcomming", "Upcomming", "Home")</li>
+                    </ul>
             </div>
         </div>
     </div>

@@ -31,7 +31,19 @@ namespace OGDMovies.Api.Models
     public class TmdbModel
     {
         public string adult { get; set; }
-        public string backdrop_path { get; set; }
+        private string _backdrop_path;
+        public string backdrop_path {
+            get
+            {
+                if (string.IsNullOrEmpty(_backdrop_path))
+                {
+                    return "../Content/blank.jpg";
+                }
+                return $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{_backdrop_path}";
+            }
+
+            set => _backdrop_path = value;
+        }
         public string belongs_to_collection { get; set; }
         public string budget { get; set; }
         //public string genres { get; set; }
@@ -42,7 +54,21 @@ namespace OGDMovies.Api.Models
         public string original_title { get; set; }
         public string overview { get; set; }
         public string popularity { get; set; }
-        public string poster_path { get; set; }
+
+        private string _poster_path;
+        public string poster_path
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_poster_path))
+                {
+                    return "../Content/blank.jpg";
+                }
+                return $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{_poster_path}";
+            }
+
+            set => _poster_path = value;
+        }
         //public string production_companies { get; set; }
         //public string production_countries { get; set; }
         public string release_date { get; set; }
@@ -65,7 +91,8 @@ namespace OGDMovies.Api.Models
                 Title = this.title,
                 ReleaseDate = this.release_date,
                 Plot = this.overview,
-                ImageUrl = $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{this.poster_path}",
+                ImageUrl = this.poster_path,
+                ImageBackdropUrl = this.backdrop_path,
                 Runtime = this.runtime,
                 Ratings = new List<MoviesModel.Rating>()
                 {

@@ -7,13 +7,14 @@ using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Google.Apis.Auth.OAuth2;
+using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.ConnectionRepos
 {
     public interface IYoutubeConnection 
     {
         string Key { get; }
-        IEnumerable<SearchResult> RetrieveData(string query, string page = "", int maxResults = 20);
+        IEnumerable<YoutubeModel> RetrieveData(string query, string page = "", int maxResults = 20);
         IEnumerable<Video> RetrieveMostPopular(string page = "", int maxResults = 20);
         ChannelSectionListResponse RetrieveImdbChannelList(string page);
     }
@@ -26,7 +27,7 @@ namespace OGDMovies.Api.ConnectionRepos
             Key = System.Configuration.ConfigurationManager.AppSettings["YOUTUBE_API_KEY"];
         }
 
-        public IEnumerable<SearchResult> RetrieveData(string query, string page, int maxResults)
+        public IEnumerable<YoutubeModel> RetrieveData(string query, string page, int maxResults)
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -35,14 +36,20 @@ namespace OGDMovies.Api.ConnectionRepos
             });
 
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = $"IMDB MOVIE {query}"; 
+            searchListRequest.Q = $"{query} Movie"; 
             searchListRequest.MaxResults = maxResults;
             //searchListRequest.PageToken = page;
             searchListRequest.Type = "youtube#video";
 
             var searchListResponse = searchListRequest.Execute();
             var searchResult = searchListResponse.Items.Where(s => s.Id.Kind == "youtube#video");
-            return searchResult;
+            return searchResult.Select(s => new YoutubeModel()
+            {
+                Id = s.Id.VideoId,
+                Title = s.Snippet.Title,
+                ImageUrl = s.Snippet.Thumbnails.High.Url,
+                Description = s.Snippet.Description
+            });
         }
         public IEnumerable<Video> RetrieveMostPopular(string page, int maxResults)
         {

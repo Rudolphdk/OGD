@@ -9,58 +9,59 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using OGDMovies.Common.Enums;
 using OGDMovies.Common.Models;
+using OGDMovies.Web.ApiCaller;
 
 namespace OGDMovies.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        AggregatedModel _aggregatedModel;
+        readonly ApiConnection _apiConnection = new ApiConnection();
+
+        public async Task<ActionResult> Index()
         {
-            return View();
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
+
+            return View("Index", _aggregatedModel);
         }
 
-        string Baseurl = "http://localhost:12006/";
+        
         public async Task<ActionResult> Popular()
         {
-            AggregatedModel popularMovies = new AggregatedModel();
+            ViewBag.Title = "Popular Movies";
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
 
-            using (var client = new HttpClient())
-            {
-                //Passing service base url  
-                client.BaseAddress = new Uri(Baseurl);
-
-                client.DefaultRequestHeaders.Clear();
-                //Define request data format  
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
-                HttpResponseMessage Res = await client.GetAsync("Api/movies/?relevance=popular");
-
-                //Checking the response is successful or not which is sent using HttpClient  
-                if (Res.IsSuccessStatusCode)
-                {
-                    //Storing the response details recieved from web api   
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-
-                    //Deserializing the response recieved from web api and storing into the Employee list  
-                    popularMovies = JsonConvert.DeserializeObject<AggregatedModel>(EmpResponse);
-
-                }
-                //returning the employee list to view  
-                return PartialView("_VerticalList", popularMovies);
-            }
+            return View("Content", _aggregatedModel);
         }
-        public ActionResult TopRated()
+        public async Task<ActionResult> TopRated()
         {
-            return View();
+            ViewBag.Title = "Top Rated Movies";
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=toprated");
+
+            return View("Content", _aggregatedModel);
         }
-        public ActionResult LatestRelease()
+        public async Task<ActionResult> Trending()
         {
-            return View();
+            ViewBag.Title = "Trending Movies";
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=trending");
+
+            return View("Content", _aggregatedModel);
         }
-        public ActionResult Search()
+        public async Task<ActionResult> Upcomming()
         {
-            return View();
+            ViewBag.Title = "Upcomming Movies";
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=upcomming");
+
+            return View("Content", _aggregatedModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Search(string query)
+        {
+            ViewBag.Title = "Search Results";
+            _aggregatedModel = await _apiConnection.RetrieveData($"dbRepo={DatabaseRepo.Tmdb}&title={query}");
+
+            return View("Content", _aggregatedModel);
         }
     }
 }

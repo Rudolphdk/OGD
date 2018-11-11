@@ -12,8 +12,9 @@ namespace OGDMovies.Api.ConnectionRepos
     public interface ITmdbConnection : IConnectionBase
     {
         AggregatedModel GetPopularMovies(string page);
-        AggregatedModel GetLatestMovie(string page);
+        AggregatedModel GetTrendingMovies(string page);
         AggregatedModel GetTopRatedMovies(string page);
+        AggregatedModel GetUpcommingMovies(string page);
     }
     public class TmdbConnection : ITmdbConnection
     {
@@ -77,23 +78,23 @@ namespace OGDMovies.Api.ConnectionRepos
             return tmdbModelList?.MapToCombinedList();
         }
 
-        public AggregatedModel GetLatestMovie(string page)
+        public AggregatedModel GetTrendingMovies(string page)
         {
-            var query = $"movie/latest?api_key={Key}&page={page}";
-            var tmdbModel = RetrieveData(query) as TmdbModel;
-            return new AggregatedModel()
-            {
-                MovieResults = new List<MoviesModel>
-                {
-                    tmdbModel?.MapToMoviesModel()
-                }
-            };
+            var query = $"trending/movie/week?api_key={Key}&page={page}";
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToCombinedList();
         }
 
         public AggregatedModel GetTopRatedMovies(string page)
         {
             var query = $"movie/top_rated?api_key={Key}&page={page}";
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToCombinedList();
+        }
 
+        public AggregatedModel GetUpcommingMovies(string page)
+        {
+            var query = $"movie/upcoming?api_key={Key}&page={page}";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }

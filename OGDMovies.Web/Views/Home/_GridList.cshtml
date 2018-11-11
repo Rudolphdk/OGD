@@ -1,13 +1,23 @@
-﻿<table>
-    @for (int x = 0; x < 5; x++)
+﻿@using OGDMovies.Web.Enums
+@model OGDMovies.Web.Models.ThumbnailViewModel
+@{
+    string link = Model.ImageUrl;
+    if (Model.Type == ThumbnailType.Youtube)
     {
-        <tr>
-            @for (int y = 0; y < 4; y++)
-            {
-                <td>image</td>
-                <td>some description</td>
-            }
-        </tr>
+        link = $"https://www.youtube.com/watch?v={Model.Id}";
     }
-</table>
-
+}
+<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 thumb">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <a href="#" data-toggle="modal" data-target="#myModal" style="height: 150px">
+                <img src="@Model.ImageUrl" class="img-responsive thumbnail tmb" alt="@Model.Title" style="width: 90%; ">
+                <div class="caption">
+                    <a href="#" title="@Model.Title" data-toggle="popover" data-trigger="focus" data-content="@Model.Description">
+                        <p class="block-with-text" style="height: 18px">@Model.Title</p>
+                    </a>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

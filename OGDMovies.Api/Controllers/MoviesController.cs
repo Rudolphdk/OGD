@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 using Google.Apis.YouTube.v3.Data;
 using Newtonsoft.Json;
@@ -67,39 +68,44 @@ namespace OGDMovies.Api.Controllers
                 case DatabaseRepo.Tmdb:
                     aggregatedModel = _tmdbConnection.GetMovieByTitle(title);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title);
-                    return Json(new { Results = aggregatedModel });
+                    return Json(aggregatedModel);
                 case DatabaseRepo.Omdb:
                     aggregatedModel = _omdbConnection.GetMovieByTitle(title);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title);
-                    return Json(new { Results = aggregatedModel });
+                    return Json(aggregatedModel);
                 default:
                     throw new Exception("Incorret DB Type");
             }
         }
 
         /// <summary>
-        /// Returns the retrieved resuls according to the selected relevance
+        /// eturns list of movies and youtube result according to the selected relevance
         /// </summary>
         /// <param name="relevance">ie. Latest, Popular, Top Rated</param>
         /// <param name="page">The Result Page</param>
         /// <returns></returns>
+        [ResponseType(typeof(AggregatedModel))]
         public IHttpActionResult GetByRelevance(MovieRelevance relevance, string page = "1")
         {
             AggregatedModel aggregatedModel;
             switch (relevance)
             {
-                case MovieRelevance.Latest:
-                    aggregatedModel = _tmdbConnection.GetLatestMovie(page);
-                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("latest release");
-                    return Json(new { Results = aggregatedModel });
+                case MovieRelevance.Trending:
+                    aggregatedModel = _tmdbConnection.GetTrendingMovies(page);
+                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("trending");
+                    return Json(aggregatedModel);
                 case MovieRelevance.Popular:
                     aggregatedModel = _tmdbConnection.GetPopularMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("most popular");
-                    return Json(new { Results = aggregatedModel});
+                    return Json(aggregatedModel);
                 case MovieRelevance.TopRated:
                     aggregatedModel = _tmdbConnection.GetTopRatedMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("top rated");
-                    return Json(new { Results = aggregatedModel});
+                    return Json(aggregatedModel);
+                case MovieRelevance.Upcomming:
+                    aggregatedModel = _tmdbConnection.GetUpcommingMovies(page);
+                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("upcomming");
+                    return Json(aggregatedModel);
                 default:
                     throw new Exception("Incorret Relevance Type");
             }

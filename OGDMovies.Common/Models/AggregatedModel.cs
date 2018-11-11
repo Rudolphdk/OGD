@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Google.Apis.YouTube.v3.Data;
+using Newtonsoft.Json;
 
 namespace OGDMovies.Common.Models
 {
@@ -12,7 +12,7 @@ namespace OGDMovies.Common.Models
         public string TotalResults { get; set; }
         public string TotalPages { get; set; }
         public IEnumerable<MoviesModel> MovieResults { get; set; } = new List<MoviesModel>();
-        public IEnumerable<SearchResult> YoutubeResults { get; set; } = new List<SearchResult>();
+        public IEnumerable<YoutubeModel> YoutubeResults { get; set; } = new List<YoutubeModel>();
     }
 
     public class MoviesModel
@@ -23,6 +23,7 @@ namespace OGDMovies.Common.Models
         public string ReleaseDate { get; set; }
         public string Plot { get; set; }
         public string ImageUrl { get; set; }
+        public string ImageBackdropUrl { get; set; }
         public string Runtime { get; set; }
         public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
 
@@ -31,5 +32,13 @@ namespace OGDMovies.Common.Models
             public string Source { get; set; }
             public string Value { get; set; }
         }
+    }
+
+    public class YoutubeModel
+    {
+        public string Id { get; set; }
+        public string Title { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
     }
 }
