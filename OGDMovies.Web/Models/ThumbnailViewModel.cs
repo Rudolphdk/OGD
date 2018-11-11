@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using OGDMovies.Web.Enums;
 using OGDMovies.Common.Models;
 
@@ -22,5 +23,10 @@ namespace OGDMovies.Web.Models
         public string ImageUrl { get; set; }
         public string Description { get; set; }
         public ThumbnailType Type { get; set; }
+
+        public string ToJson()
+        {
+            return Json.Encode(this);
+        }
     }
 }

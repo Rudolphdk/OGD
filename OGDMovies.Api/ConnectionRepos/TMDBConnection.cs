@@ -64,9 +64,9 @@ namespace OGDMovies.Api.ConnectionRepos
             };
         }
 
-        public AggregatedModel GetMovieByTitle(string title)
+        public AggregatedModel GetMovieByTitle(string title, string page)
         {
-            var query = $"search/movie?api_key={Key}&query={title}&include_adult=true";
+            var query = $"search/movie?api_key={Key}&query={title}&include_adult=true&page={page}";
             var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
             return tmdbModelList?.MapToCombinedList();
         }

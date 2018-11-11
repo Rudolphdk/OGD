@@ -1,4 +1,5 @@
-﻿@using OGDMovies.Web.Enums
+﻿@using OGDMovies.Common.Enums
+@using OGDMovies.Web.Enums
 @using OGDMovies.Web.Models
 @model OGDMovies.Common.Models.AggregatedModel
 
@@ -6,6 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @{
     var showPagination = (!string.IsNullOrEmpty(Model.Page) && !string.IsNullOrEmpty(Model.TotalPages));
+    int.TryParse(Model.Page, out var currentPage);
 }
 <!-- Movie Content -->
 <div class="container">
@@ -32,9 +34,40 @@
     </div>
     @if (showPagination)
     {
+        <div align="right" style="padding: 10px">
+            Page <span class="badge" style="background-color: darkgrey">@Model.Page</span> of <span class="badge" style="background-color: darkgrey">@Model.TotalPages</span>
+        </div>
         <ul class="pager">
-            <li><a id="MoviePrevious" href="#">Previous</a></li>
-            <li><a id="MovieNext" href="#">Next</a></li>
+            @if (Model.RelevanceType == MovieRelevance.Search)
+            {
+                <li>
+                    @if (currentPage == 1)
+                    {<a href="#" disabled>Previous</a>}
+                    else
+                    {@Html.ActionLink("Previous", Model.RelevanceType.ToString(), new { query = ViewBag.Query, page = currentPage - 1 }, new { disabled = true })}
+                </li>
+                <li>
+                    @if (currentPage == int.Parse(Model.TotalPages))
+                    {<a href="#">Next</a>}
+                    else
+                    {@Html.ActionLink("Next", Model.RelevanceType.ToString(), new { query = ViewBag.Query, page = currentPage + 1 })}
+                </li>
+            }
+            else
+            {
+                <li>
+                    @if (currentPage == 1)
+                    {<a href="#">Previous</a>}
+                    else
+                    {@Html.ActionLink("Previous", Model.RelevanceType.ToString(), new { page = currentPage - 1 })}
+                </li>
+                <li>
+                    @if (currentPage == int.Parse(Model.TotalPages))
+                    {<a href="#">Next</a>}
+                    else
+                    {@Html.ActionLink("Next", Model.RelevanceType.ToString(), new { page = currentPage + 1 })}
+                </li>
+            }
         </ul>
     }
 </div>
@@ -60,15 +93,19 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div id="myModal" class="modal fade"  role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 id="ModalHeader" class="modal-title">yyy</h4>
             </div>
             <div class="modal-body">
-                <p>This is a large modal.</p>
+                <div align="center">
+                    <img id="ModalImage" src="" class="thumbnail" style="height: 400px">
+                    <iframe id="ModalVideo" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p id="ModalBody">This is a large modal.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -85,3 +122,4 @@
         $('[data-toggle="popover"]').on('click', function (e) { e.preventDefault(); return true; });
     });
 </script>
+<script src="~/Scripts/js/modalClick.js"></script>

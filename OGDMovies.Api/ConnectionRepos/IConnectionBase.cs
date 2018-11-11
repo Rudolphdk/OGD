@@ -13,6 +13,6 @@ namespace OGDMovies.Api.ConnectionRepos
         string Url { get; }
         dynamic RetrieveData(string query, bool expectMultiple);
         AggregatedModel GetMovieById(string id);
-        AggregatedModel GetMovieByTitle(string title);
+        AggregatedModel GetMovieByTitle(string title, string page = "1");
     }
 }

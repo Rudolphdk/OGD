@@ -21,46 +21,46 @@ namespace OGDMovies.Web.Controllers
         public async Task<ActionResult> Index()
         {
             _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
-
             return View("Index", _aggregatedModel);
         }
 
+        public async Task<ActionResult> Content()
+        {
+            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
+            return View("Index", _aggregatedModel);
+        }
         
-        public async Task<ActionResult> Popular()
+        public async Task<ActionResult> Popular(string page = "1")
         {
             ViewBag.Title = "Popular Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
-
+            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=popular&page={page}");
             return View("Content", _aggregatedModel);
         }
-        public async Task<ActionResult> TopRated()
+        public async Task<ActionResult> TopRated(string page = "1")
         {
             ViewBag.Title = "Top Rated Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=toprated");
-
+            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=toprated&page={page}");
             return View("Content", _aggregatedModel);
         }
-        public async Task<ActionResult> Trending()
+        public async Task<ActionResult> Trending(string page = "1")
         {
             ViewBag.Title = "Trending Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=trending");
-
+            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=trending&page={page}");
             return View("Content", _aggregatedModel);
         }
-        public async Task<ActionResult> Upcomming()
+        public async Task<ActionResult> Upcomming(string page = "1")
         {
             ViewBag.Title = "Upcomming Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=upcomming");
-
+            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=upcomming&page={page}");
             return View("Content", _aggregatedModel);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Search(string query)
+        
+        public async Task<ActionResult> Search(string query, string page = "1")
         {
-            ViewBag.Title = "Search Results";
-            _aggregatedModel = await _apiConnection.RetrieveData($"dbRepo={DatabaseRepo.Tmdb}&title={query}");
-
+            ViewBag.Title = $"Search Results: {query}";
+            ViewBag.Query = query;
+            _aggregatedModel = await _apiConnection.RetrieveData($"dbRepo={DatabaseRepo.Tmdb}&title={query}&page={page}");
             return View("Content", _aggregatedModel);
         }
     }

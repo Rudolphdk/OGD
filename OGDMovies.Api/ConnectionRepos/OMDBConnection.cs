@@ -54,7 +54,7 @@ namespace OGDMovies.Api.ConnectionRepos
             };
         }
 
-        public AggregatedModel GetMovieByTitle(string title)
+        public AggregatedModel GetMovieByTitle(string title, string page)
         {
             var query = $"t={title}";
             var omdbModel = RetrieveData(query) as OmdbModel;

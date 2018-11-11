@@ -14,6 +14,8 @@ namespace OGDMovies.Common.Enums
         [Display(Name = "Top Rated")]
         TopRated = 3,
         [Display(Name = "Upcomming")]
-        Upcomming = 4
+        Upcomming = 5,
+        [Display(Name = "Search")]
+        Search = 6
     }
 }

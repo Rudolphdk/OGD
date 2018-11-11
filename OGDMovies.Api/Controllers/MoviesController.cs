@@ -60,18 +60,20 @@ namespace OGDMovies.Api.Controllers
         /// <param name="dbRepo">The movie database to search from</param>
         /// <param name="title">The Movie Title</param>
         /// <returns>AggregatedModel</returns>
-        public IHttpActionResult GetByTitle(DatabaseRepo dbRepo, string title)
+        public IHttpActionResult GetByTitle(DatabaseRepo dbRepo, string title, string page = "1")
         {
             AggregatedModel aggregatedModel;
             switch (dbRepo)
             {
                 case DatabaseRepo.Tmdb:
-                    aggregatedModel = _tmdbConnection.GetMovieByTitle(title);
-                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title);
+                    aggregatedModel = _tmdbConnection.GetMovieByTitle(title, page);
+                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title,page);
+                    aggregatedModel.RelevanceType = MovieRelevance.Search;
                     return Json(aggregatedModel);
                 case DatabaseRepo.Omdb:
-                    aggregatedModel = _omdbConnection.GetMovieByTitle(title);
-                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title);
+                    aggregatedModel = _omdbConnection.GetMovieByTitle(title, page);
+                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title, page);
+                    aggregatedModel.RelevanceType = MovieRelevance.Search;
                     return Json(aggregatedModel);
                 default:
                     throw new Exception("Incorret DB Type");
@@ -93,28 +95,26 @@ namespace OGDMovies.Api.Controllers
                 case MovieRelevance.Trending:
                     aggregatedModel = _tmdbConnection.GetTrendingMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("trending");
+                    aggregatedModel.RelevanceType = MovieRelevance.Trending;
                     return Json(aggregatedModel);
                 case MovieRelevance.Popular:
                     aggregatedModel = _tmdbConnection.GetPopularMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("most popular");
+                    aggregatedModel.RelevanceType = MovieRelevance.Popular;
                     return Json(aggregatedModel);
                 case MovieRelevance.TopRated:
                     aggregatedModel = _tmdbConnection.GetTopRatedMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("top rated");
+                    aggregatedModel.RelevanceType = MovieRelevance.TopRated;
                     return Json(aggregatedModel);
                 case MovieRelevance.Upcomming:
                     aggregatedModel = _tmdbConnection.GetUpcommingMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("upcomming");
+                    aggregatedModel.RelevanceType = MovieRelevance.Upcomming;
                     return Json(aggregatedModel);
                 default:
                     throw new Exception("Incorret Relevance Type");
             }
         }
-
-        // POST api/movies
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
     }
 }
