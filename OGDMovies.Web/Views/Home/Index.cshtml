@@ -1,4 +1,6 @@
-﻿@model OGDMovies.Common.Models.AggregatedModel
+﻿@using OGDMovies.Web.Enums
+@using OGDMovies.Web.Models
+@model OGDMovies.Common.Models.AggregatedModel
 
 <link href="~/Content/heroic-features.css" rel="stylesheet" />
 <link href="~/Content/overflowBlock.css" rel="stylesheet" />
@@ -6,9 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- Page Content -->
 <div class="container">
-    <!-- Jumbotron Header -->
     <header class="jumbotron hero-spacer">
         <h1>A Warm Welcome!</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
@@ -17,7 +17,6 @@
         </p>
     </header>
 
-    <!-- Title -->
     <div class="row">
         <div class="col-lg-12">
             <h3>Top Five Movies</h3>
@@ -69,63 +68,28 @@
             <h3>Latest on Youtube</h3>
         </div>
     </div>
-    <!-- /.row -->
-    <!-- Page Features -->
     @{
         var topFourYoutube = Model.YoutubeResults.Take(4).ToList();
+        foreach (var youtubeModel in topFourYoutube.Select(s =>  new ThumbnailViewModel(s)))
+        {
+            var link = $"https://www.youtube.com/embed/{youtubeModel.Id}";
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <a href="#" data-toggle="modal" data-target="#myModal" style="height: 150px;" onclick="onModalClick('@youtubeModel.ToJson()', '@link')">
+                        <img src="@youtubeModel.ImageUrl" alt="@youtubeModel.Title">
+                        <div class="caption">
+                            <h4 class="block-with-text" style="height: 20px">@youtubeModel.Title</h4>
+                            <p class="block-with-text">@youtubeModel.Description</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
     }
-    <div class="row text-center">
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="@topFourYoutube[0].ImageUrl" alt="">
-                <div class="caption">
-                    <h4 class="block-with-text" style="height: 20px" >@topFourYoutube[0].Title</h4>
-                    <p class="block-with-text">@topFourYoutube[0].Description</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="@topFourYoutube[1].ImageUrl" alt="">
-                <div class="caption">
-                    <h4 class="block-with-text" style="height: 20px" >@topFourYoutube[1].Title</h4>
-                    <p class="block-with-text" >@topFourYoutube[1].Description</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="@topFourYoutube[2].ImageUrl" alt="">
-                <div class="caption">
-                    <h4 class="block-with-text" style="height: 20px" >@topFourYoutube[2].Title</h4>
-                    <p class="block-with-text" >@topFourYoutube[2].Description</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6 hero-feature">
-            <div class="thumbnail">
-                <img src="@topFourYoutube[3].ImageUrl" alt="">
-                <div class="caption">
-                    <h4 class="block-with-text" style="height: 20px" >@topFourYoutube[3].Title</h4>
-                    <p class="block-with-text" >@topFourYoutube[3].Description</p>
-                    <p>
-                        <a href="#" class="btn btn-primary">More Info</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.row -->
 </div>
-<!-- /.container -->
+
+<!-- Modal -->
+@Html.Partial("_ModalInfo")
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/Scripts/js/modalClick.js"></script>

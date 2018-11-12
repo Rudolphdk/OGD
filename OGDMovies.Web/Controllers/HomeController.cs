@@ -10,58 +10,42 @@ using Newtonsoft.Json;
 using OGDMovies.Common.Enums;
 using OGDMovies.Common.Models;
 using OGDMovies.Web.ApiCaller;
+using RestSharp;
 
 namespace OGDMovies.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        AggregatedModel _aggregatedModel;
-        readonly ApiConnection _apiConnection = new ApiConnection();
+        private AggregatedModel _aggregatedModel;
+
+        public HomeController(IApiClient apiClient) : base(apiClient)
+        {
+        }
+
+        public async Task<ActionResult> Relevance(MovieRelevance relevance, string page = "1")
+        {
+            var relevanceName = CustomEnumHelper.DisplayNameFor(relevance);
+            ViewBag.Title = $"{relevanceName} Movies";
+            return await CallApiAndPopulateView($"relevance={relevance}&page={page}", "Content");
+        }
 
         public async Task<ActionResult> Index()
         {
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
-            return View("Index", _aggregatedModel);
+            return await CallApiAndPopulateView($"relevance=popular", "Index");
         }
 
         public async Task<ActionResult> Content()
         {
-            _aggregatedModel = await _apiConnection.RetrieveData("relevance=popular");
-            return View("Index", _aggregatedModel);
-        }
-        
-        public async Task<ActionResult> Popular(string page = "1")
-        {
-            ViewBag.Title = "Popular Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=popular&page={page}");
-            return View("Content", _aggregatedModel);
-        }
-        public async Task<ActionResult> TopRated(string page = "1")
-        {
-            ViewBag.Title = "Top Rated Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=toprated&page={page}");
-            return View("Content", _aggregatedModel);
-        }
-        public async Task<ActionResult> Trending(string page = "1")
-        {
-            ViewBag.Title = "Trending Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=trending&page={page}");
-            return View("Content", _aggregatedModel);
-        }
-        public async Task<ActionResult> Upcomming(string page = "1")
-        {
-            ViewBag.Title = "Upcomming Movies";
-            _aggregatedModel = await _apiConnection.RetrieveData($"relevance=upcomming&page={page}");
-            return View("Content", _aggregatedModel);
+            return await Index();
         }
 
-        
         public async Task<ActionResult> Search(string query, string page = "1")
         {
             ViewBag.Title = $"Search Results: {query}";
             ViewBag.Query = query;
-            _aggregatedModel = await _apiConnection.RetrieveData($"dbRepo={DatabaseRepo.Tmdb}&title={query}&page={page}");
-            return View("Content", _aggregatedModel);
+            return await CallApiAndPopulateView($"dbRepo={DatabaseRepo.Tmdb}&title={query}&page={page}", "Content");
         }
+
+
     }
 }

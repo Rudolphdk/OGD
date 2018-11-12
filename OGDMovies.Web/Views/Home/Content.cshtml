@@ -27,7 +27,7 @@
             <div>
                 @foreach (var movieItem in Model.MovieResults)
                 {
-                    @Html.Partial("_GridList", new ThumbnailViewModel(movieItem.Id, movieItem.Title, movieItem.ImageUrl, movieItem.Plot, ThumbnailType.Movie))
+                    @Html.Partial("_GridList", new ThumbnailViewModel(movieItem))
                 }
             </div>
         }
@@ -40,32 +40,34 @@
         <ul class="pager">
             @if (Model.RelevanceType == MovieRelevance.Search)
             {
+                //Paging for search results
                 <li>
                     @if (currentPage == 1)
                     {<a href="#" disabled>Previous</a>}
                     else
-                    {@Html.ActionLink("Previous", Model.RelevanceType.ToString(), new { query = ViewBag.Query, page = currentPage - 1 }, new { disabled = true })}
+                    {@Html.ActionLink("Previous", "Search", new { query = ViewBag.Query, page = currentPage - 1 }, new { disabled = true })}
                 </li>
                 <li>
                     @if (currentPage == int.Parse(Model.TotalPages))
                     {<a href="#">Next</a>}
                     else
-                    {@Html.ActionLink("Next", Model.RelevanceType.ToString(), new { query = ViewBag.Query, page = currentPage + 1 })}
+                    {@Html.ActionLink("Next", "Search", new { query = ViewBag.Query, page = currentPage + 1 })}
                 </li>
             }
             else
             {
+                //Paging for relevance type
                 <li>
                     @if (currentPage == 1)
                     {<a href="#">Previous</a>}
                     else
-                    {@Html.ActionLink("Previous", Model.RelevanceType.ToString(), new { page = currentPage - 1 })}
+                    {@Html.ActionLink("Previous", "Relevance", new { relevance = Model.RelevanceType.ToString(), page = currentPage - 1 })}
                 </li>
                 <li>
                     @if (currentPage == int.Parse(Model.TotalPages))
                     {<a href="#">Next</a>}
                     else
-                    {@Html.ActionLink("Next", Model.RelevanceType.ToString(), new { page = currentPage + 1 })}
+                    {@Html.ActionLink("Next", "Relevance", new { relevance = Model.RelevanceType.ToString(), page = currentPage + 1 })}
                 </li>
             }
         </ul>
@@ -82,37 +84,14 @@
         {
             foreach (var youtubeItem in Model.YoutubeResults)
             {
-                @Html.Partial("_GridList", new ThumbnailViewModel(youtubeItem.Id, youtubeItem.Title, youtubeItem.ImageUrl, youtubeItem.Description, ThumbnailType.Youtube))
+                @Html.Partial("_GridList", new ThumbnailViewModel(youtubeItem))
             }
         }
     </div>
-    <ul class="pager">
-        <li><a href="#">Previous</a></li>
-        <li><a href="#">Next</a></li>
-    </ul>
 </div>
 
 <!-- Modal -->
-<div id="myModal" class="modal fade"  role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="ModalHeader" class="modal-title">yyy</h4>
-            </div>
-            <div class="modal-body">
-                <div align="center">
-                    <img id="ModalImage" src="" class="thumbnail" style="height: 400px">
-                    <iframe id="ModalVideo" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <p id="ModalBody">This is a large modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("_ModalInfo")
 
 <script>
     $(document).ready(function () {
