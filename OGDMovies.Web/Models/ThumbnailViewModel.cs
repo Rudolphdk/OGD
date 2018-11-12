@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
+using System.Web.Mvc;
 using OGDMovies.Web.Enums;
 using OGDMovies.Common.Models;
+using HtmlHelper = System.Web.WebPages.Html.HtmlHelper;
 
 namespace OGDMovies.Web.Models
 {
@@ -26,6 +28,8 @@ namespace OGDMovies.Web.Models
 
         public string ToJson()
         {
+            this.Title = this.Title.Replace("\"", "");
+            this.Description = this.Description.Replace("\"","");
             return Json.Encode(this);
         }
     }

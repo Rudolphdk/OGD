@@ -2,6 +2,7 @@
     var obj = jQuery.parseJSON(json);
     $("#ModalHeader").text(obj.Title);
     $("#ModalBody").text(obj.Description);
+
     if (obj.Type == 2) {
         $("#ModalVideo").attr("src", link);
         $("#ModalVideo").show();
