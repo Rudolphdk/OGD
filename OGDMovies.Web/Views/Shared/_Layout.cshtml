@@ -21,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @LinkExtensions.ActionLink(Html, "Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @LinkExtensions.ActionLink(Html, "OGD Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div id="topnav" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -34,7 +34,6 @@
                             <li>@LinkExtensions.ActionLink(Html, CustomEnumHelper.DisplayNameFor(_enum), $"Relevance", new { relevance = movieRelevance })</li>
                         }
                     }
-                    
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li style="padding: 12px">
@@ -182,7 +181,6 @@
             .autocomplete('instance')._renderItem = function(ul, item) {
                 return $('<li>')
                     .append('<a><img class="thumbnail tmb" width="50%" src="' + item.ImageUrl + '" /><p><b>' + item.Title +'</b></p></a>')
-                    //.append('<a>' + item.Title + '</a>')
                     .appendTo(ul);
             }
     });
