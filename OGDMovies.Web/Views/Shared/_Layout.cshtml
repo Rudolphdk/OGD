@@ -49,7 +49,7 @@
                 @LinkExtensions.ActionLink(Html, "OGD Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div id="topnav" class="navbar-collapse collapse">
-                <div class="search-container" >
+                <div class="search-container">
                     <form method="post" action="@Url.Action("Search", "Home")">
                         <input id="search" type="text" placeholder="Search.." name="query">
                         <button type="submit"><i class="fa fa-search"></i></button>
@@ -58,14 +58,23 @@
                 <ul class="nav navbar-nav">
                     @{
                         //Dynamicaly add navigation links based on Enum. Show all except search
-                        foreach (var movieRelevance in Enum.GetNames(typeof(MovieRelevance)).Where(s=>s.ToLower() != "search"))
+                        foreach (var movieRelevance in Enum.GetNames(typeof(MovieRelevance)).Where(s => s.ToLower() != "search"))
                         {
                             Enum.TryParse(movieRelevance, out MovieRelevance _enum);
-                            
+
                             <li>@LinkExtensions.ActionLink(Html, CustomEnumHelper.DisplayNameFor(_enum), $"Relevance", new { relevance = movieRelevance })</li>
                         }
                     }
+                    <li style="padding: 12px">
+                        <div class="fb-login-button"
+                             data-max-rows="1"
+                             data-size="medium"
+                             data-width="20"
+                             data-button-type="continue_with"
+                             data-use-continue-as="true"></div>
+                    </li>
                 </ul>
+
             </div>
         </div>
     </div>
@@ -76,8 +85,20 @@
             <p>&copy; @DateTime.Now.Year - OGD Movie Database - Created by Rudolph de kock</p>
         </footer>
     </div>
-
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=2175976735978710&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/facebook")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
