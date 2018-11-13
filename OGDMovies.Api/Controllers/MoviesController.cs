@@ -81,7 +81,7 @@ namespace OGDMovies.Api.Controllers
         }
 
         /// <summary>
-        /// eturns list of movies and youtube result according to the selected relevance
+        /// Returns list of movies and youtube result according to the selected relevance
         /// </summary>
         /// <param name="relevance">ie. Latest, Popular, Top Rated</param>
         /// <param name="page">The Result Page</param>
