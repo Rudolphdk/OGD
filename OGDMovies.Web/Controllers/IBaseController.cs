@@ -15,12 +15,12 @@ namespace OGDMovies.Web.Controllers
         Task<ActionResult> CallApiAndPopulateView(string resource, string view);
     }
 
-    public class BaseController : Controller, IBaseController
+    public abstract class BaseController : Controller, IBaseController
     {
         private IApiClient _apiClient;
 
         //Constructor for Dependency Injection
-        public BaseController(IApiClient apiClient)
+        protected BaseController(IApiClient apiClient)
         {
             this._apiClient = apiClient;
         }
