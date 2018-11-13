@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using OGDMovies.Common.Enums;
 using OGDMovies.Common.Models;
@@ -16,8 +17,6 @@ namespace OGDMovies.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private AggregatedModel _aggregatedModel;
-
         public HomeController(IApiClient apiClient) : base(apiClient)
         {
         }
@@ -26,12 +25,12 @@ namespace OGDMovies.Web.Controllers
         {
             var relevanceName = CustomEnumHelper.DisplayNameFor(relevance);
             ViewBag.Title = $"{relevanceName} Movies";
-            return await CallApiAndPopulateView($"relevance={relevance}&page={page}", "Content");
+            return await CallApiAndPopulateView<AggregatedModel>($"relevance={relevance}&page={page}", "Content");
         }
 
         public async Task<ActionResult> Index()
         {
-            return await CallApiAndPopulateView($"relevance=popular", "Index");
+            return await CallApiAndPopulateView<AggregatedModel>($"relevance=popular", "Index");
         }
 
         public async Task<ActionResult> Content()
@@ -43,9 +42,13 @@ namespace OGDMovies.Web.Controllers
         {
             ViewBag.Title = $"Search Results: {query}";
             ViewBag.Query = query;
-            return await CallApiAndPopulateView($"dbRepo={DatabaseRepo.Tmdb}&title={query}&page={page}", "Content");
+            return await CallApiAndPopulateView<AggregatedModel>($"dbRepo={DatabaseRepo.Tmdb}&title={query}&page={page}", "Content");
         }
 
-
+        public async Task<string> AutoCompleteMovieTitles(string query)
+        {
+            var result = await CallApiAutoComplete<List<string>>($"autocomplete={query}");
+            return new JavaScriptSerializer().Serialize(result);
+        }
     }
 }

@@ -56,8 +56,8 @@ namespace OGDMovies.Web.ApiCaller
     //This is a quicker way using RestSharp (Nuget) package
     public interface IApiClient : IRestClient
     {
-        Task<AggregatedModel> RetrieveData(string serviceResource);
-        Task<AggregatedModel> RetrieveDataCached(string serviceResource);
+        Task<T> RetrieveData<T>(string serviceResource) where T : new();
+        Task<T> RetrieveDataCached<T>(string serviceResource) where T : new();
     }
 
     public sealed class ApiClient : RestClient, IApiClient
@@ -72,21 +72,22 @@ namespace OGDMovies.Web.ApiCaller
         }
 
         //Call the cached method for cached result
-        public async Task<AggregatedModel> RetrieveDataCached(string serviceResource)
+        public async Task<T> RetrieveDataCached<T>(string serviceResource) where T : new()
         {
             // I use the serviceResource string as the cacheKey, 
             // which is perfect as it contains what you are retrieving and the page number.
             //This works well for caching individual result pages too.
-            return await _cache.GetOrSet(serviceResource, () => RetrieveData(serviceResource));
+            return await _cache.GetOrSet(serviceResource, () => RetrieveData<T>(serviceResource));
         }
 
         //Call the non cached method for freash result from API
-        public async Task<AggregatedModel> RetrieveData(string serviceResource)
+        public async Task<T> RetrieveData<T>(string serviceResource) where T : new()
         {
+            var t = typeof(T);
             RestRequest request = new RestRequest($"Api/movies/?{serviceResource}", Method.GET);
-            var taskCompletionSource = new TaskCompletionSource<AggregatedModel>();
-            this.ExecuteAsync<AggregatedModel>(request, (response) => taskCompletionSource.SetResult(response.Data));
-            return await taskCompletionSource.Task;
+            var taskCompletionSource = new TaskCompletionSource<T>();
+            this.ExecuteAsync<T>(request, (response) => taskCompletionSource.SetResult(response.Data));
+            return await taskCompletionSource.Task ;
         }
     }
 }

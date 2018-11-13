@@ -25,6 +25,9 @@ namespace OGDMovies.Web
             bundles.Add(new ScriptBundle("~/bundles/facebook").Include(
                       "~/Scripts/js/facebook.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/autocomplete").Include(
+                      "~/Scripts/js/autoComplete.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

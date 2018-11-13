@@ -67,5 +67,9 @@ namespace OGDMovies.Api.ConnectionRepos
             };
         }
 
+        public List<string> GetTitleAutoComplete(string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

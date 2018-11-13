@@ -23,6 +23,11 @@ namespace OGDMovies.Api.Models
                 MovieResults = this.results.Select(s => s.MapToMoviesModel())
             };
         }
+
+        public List<string> MapToAutoCompleteList()
+        {
+            return results.Select(s => s.title).ToList();
+        }
     }
 
     /// <summary>

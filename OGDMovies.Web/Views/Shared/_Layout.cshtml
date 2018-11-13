@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <style>
@@ -97,9 +98,34 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/facebook")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js "></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script>
+        var requestHeaders = {
+            "accept": "application/json;odata=verbose"
+        }
+        $("#search").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    dataType: 'json',
+                    async: true,
+                    headers: requestHeaders,
+                    url: '@Url.Action("AutoCompleteMovieTitles", "Home")',
+                    data: {
+                        query: request.term
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 3
+        });
+    </script>
 </body>
 </html>

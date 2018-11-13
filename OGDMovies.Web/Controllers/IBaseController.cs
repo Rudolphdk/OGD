@@ -12,7 +12,8 @@ namespace OGDMovies.Web.Controllers
 {
     public interface IBaseController : IController
     {
-        Task<ActionResult> CallApiAndPopulateView(string resource, string view);
+        Task<ActionResult> CallApiAndPopulateView<T>(string resource, string view) where T : new();
+        Task<T> CallApiAutoComplete<T>(string query) where T : new();
     }
 
     public abstract class BaseController : Controller, IBaseController
@@ -25,10 +26,16 @@ namespace OGDMovies.Web.Controllers
             this._apiClient = apiClient;
         }
 
-        public async Task<ActionResult> CallApiAndPopulateView(string resource, string view)
+        public async Task<ActionResult> CallApiAndPopulateView<T>(string resource, string view) where T : new()
         {
-            var data = await _apiClient.RetrieveDataCached(resource);
+            var data = await _apiClient.RetrieveDataCached<T>(resource);
             return View(view, data);
+        }
+
+        public async Task<T> CallApiAutoComplete<T>(string query) where T : new()
+        {
+            var data = await _apiClient.RetrieveData<T>(query);
+            return data;
         }
     }
 }

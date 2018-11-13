@@ -71,6 +71,13 @@ namespace OGDMovies.Api.ConnectionRepos
             return tmdbModelList?.MapToCombinedList();
         }
 
+        public List<string> GetTitleAutoComplete(string title)
+        {
+            var query = $"search/movie?api_key={Key}&query={title}";
+            var tmdbModelList = RetrieveData(query, true) as TmdbModelList;
+            return tmdbModelList?.MapToAutoCompleteList();
+        }
+
         public AggregatedModel GetPopularMovies(string page)
         {
             var query = $"movie/popular?api_key={Key}&page={page}";

@@ -29,7 +29,7 @@ namespace OGDMovies.Api.Controllers
             this._omdbConnection = omdbConnection;
             this._youtubeConnection = youtubeConnection;
         }
-        
+
         /// <summary>
         /// Returns the retrieved movies information by an Id
         /// </summary>
@@ -60,21 +60,21 @@ namespace OGDMovies.Api.Controllers
         /// <param name="dbRepo">The movie database to search from</param>
         /// <param name="title">The Movie Title</param>
         /// <returns>AggregatedModel</returns>
-        public IHttpActionResult GetByTitle(DatabaseRepo dbRepo, string title, string page = "1")
+        public AggregatedModel GetByTitle(DatabaseRepo dbRepo, string title, string page = "1")
         {
             AggregatedModel aggregatedModel;
             switch (dbRepo)
             {
                 case DatabaseRepo.Tmdb:
                     aggregatedModel = _tmdbConnection.GetMovieByTitle(title, page);
-                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title,page);
+                    aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title, page);
                     aggregatedModel.RelevanceType = MovieRelevance.Search;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 case DatabaseRepo.Omdb:
                     aggregatedModel = _omdbConnection.GetMovieByTitle(title, page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData(title, page);
                     aggregatedModel.RelevanceType = MovieRelevance.Search;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 default:
                     throw new Exception("Incorret DB Type");
             }
@@ -86,8 +86,7 @@ namespace OGDMovies.Api.Controllers
         /// <param name="relevance">ie. Latest, Popular, Top Rated</param>
         /// <param name="page">The Result Page</param>
         /// <returns></returns>
-        [ResponseType(typeof(AggregatedModel))]
-        public IHttpActionResult GetByRelevance(MovieRelevance relevance, string page = "1")
+        public AggregatedModel GetByRelevance(MovieRelevance relevance, string page = "1")
         {
             AggregatedModel aggregatedModel;
             switch (relevance)
@@ -96,25 +95,31 @@ namespace OGDMovies.Api.Controllers
                     aggregatedModel = _tmdbConnection.GetTrendingMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("trending");
                     aggregatedModel.RelevanceType = MovieRelevance.Trending;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 case MovieRelevance.Popular:
                     aggregatedModel = _tmdbConnection.GetPopularMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("most popular");
                     aggregatedModel.RelevanceType = MovieRelevance.Popular;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 case MovieRelevance.TopRated:
                     aggregatedModel = _tmdbConnection.GetTopRatedMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("top rated");
                     aggregatedModel.RelevanceType = MovieRelevance.TopRated;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 case MovieRelevance.Upcomming:
                     aggregatedModel = _tmdbConnection.GetUpcommingMovies(page);
                     aggregatedModel.YoutubeResults = _youtubeConnection.RetrieveData("upcomming");
                     aggregatedModel.RelevanceType = MovieRelevance.Upcomming;
-                    return Json(aggregatedModel);
+                    return aggregatedModel;
                 default:
                     throw new Exception("Incorret Relevance Type");
             }
+        }
+
+        public List<string> GetAutoComplete(string autocomplete)
+        {
+            var result = _tmdbConnection.GetTitleAutoComplete(autocomplete);
+            return result;
         }
     }
 }

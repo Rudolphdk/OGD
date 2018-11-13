@@ -193,3 +193,5 @@ D:\OGD\OGD\OGDMovies.Web\obj\Debug\OGDMovies.Web.csproj.CoreCompileInputs.cache
 D:\OGD\OGD\OGDMovies.Web\obj\Debug\OGDMovies.Web.csproj.CopyComplete
 D:\OGD\OGD\OGDMovies.Web\obj\Debug\OGDMovies.Web.dll
 D:\OGD\OGD\OGDMovies.Web\obj\Debug\OGDMovies.Web.pdb
+D:\OGD\OGD\OGDMovies.Web\bin\AspNet.ScriptManager.jQuery.UI.Combined.dll
+D:\OGD\OGD\OGDMovies.Web\bin\Microsoft.ScriptManager.jQuery.UI.Combined.dll
