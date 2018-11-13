@@ -94,6 +94,7 @@ namespace OGDMovies.Api.Models
                 ImageUrl = this.poster_path,
                 ImageBackdropUrl = this.backdrop_path,
                 Runtime = this.runtime,
+                Vote = this.vote_average,
                 Ratings = new List<MoviesModel.Rating>()
                 {
                     new MoviesModel.Rating() {Source = "IMDB", Value = this.vote_average}

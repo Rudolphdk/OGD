@@ -9,9 +9,9 @@ namespace OGDMovies.Api.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public string Index()
+        public ActionResult Index()
         {
-            return "API Loaded";
+            return View("Index");
         }
     }
 }

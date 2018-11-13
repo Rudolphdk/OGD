@@ -3,14 +3,26 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="ModalHeader" class="modal-title"></h4>
+                <h3 id="ModalHeader" class="modal-title"></h3>
             </div>
             <div class="modal-body">
                 <div align="center">
                     <img id="ModalImage" src="" class="thumbnail" style="height: 400px">
                     <iframe id="ModalVideo" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <p id="ModalBody"></p>
+                <hr/>
+                <div class="row" id="ReleaseDateRow">
+                    <div class="col-md-2">Release Date:</div>
+                    <div class="col-md-6"><p id="ModalReleaseDate"></p></div>
+                </div>
+                <div class="row" id="RatingRow">
+                    <div class="col-md-2">Rating:</div>
+                    <div class="col-md-6"><p id="ModalRating"></p></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Description:</div>
+                    <div class="col-md-8"><p id="ModalBody"></p></div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

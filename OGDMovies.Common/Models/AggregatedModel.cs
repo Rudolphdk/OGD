@@ -27,6 +27,7 @@ namespace OGDMovies.Common.Models
         public string ImageUrl { get; set; }
         public string ImageBackdropUrl { get; set; }
         public string Runtime { get; set; }
+        public string Vote { get; set; }
         public IEnumerable<Rating> Ratings { get; set; } = new List<Rating>();
 
         public class Rating

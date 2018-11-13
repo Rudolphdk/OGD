@@ -31,6 +31,7 @@ namespace OGDMovies.Web.Models
             this.Description = movieModel.Plot;
             this.ReleaseDate = movieModel.ReleaseDate;
             this.Runtime = movieModel.Runtime;
+            this.Vote = movieModel.Vote;
             this.Type = ThumbnailType.Movie;
         }
 
@@ -49,6 +50,7 @@ namespace OGDMovies.Web.Models
         public string Description { get; set; }
         public string ReleaseDate { get; set; }
         public string Runtime { get; set; }
+        public string Vote { get; set; }
         public ThumbnailType Type { get; set; }
 
         public string ToJson()

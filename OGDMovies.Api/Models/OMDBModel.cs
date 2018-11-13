@@ -53,6 +53,7 @@ namespace OGDMovies.Api.Models
                 Plot = this.Plot,
                 ImageUrl = this.Poster,
                 Runtime = this.Runtime,
+                Vote = this.Rated,
                 Ratings = this.Ratings.Select(s => new MoviesModel.Rating(){Source = s.Source, Value = s.Value})
             };
         }

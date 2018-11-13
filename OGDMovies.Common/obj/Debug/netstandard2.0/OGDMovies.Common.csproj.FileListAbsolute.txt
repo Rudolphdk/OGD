@@ -13,3 +13,4 @@ D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.AssemblyIn
 D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.csproj.CopyComplete
 D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.dll
 D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.pdb
+D:\OGD\OGD\OGDMovies.Common\obj\Debug\netstandard2.0\OGDMovies.Common.csprojAssemblyReference.cache
