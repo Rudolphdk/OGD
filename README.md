@@ -4,6 +4,8 @@
    *Uses Dependency Injection with Unity (Nuget package)
    *RestSharp Api caller (Nuget package)
    *Custom caching
+   *Facebook login
+   *Youtube player
    *Bootsrap
    *jquery
 ```
