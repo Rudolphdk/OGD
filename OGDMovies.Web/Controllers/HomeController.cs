@@ -47,8 +47,26 @@ namespace OGDMovies.Web.Controllers
 
         public async Task<string> AutoCompleteMovieTitles(string query)
         {
-            var result = await CallApiAutoComplete<List<string>>($"autocomplete={query}");
+            var result = await CallApiAutoComplete<List<AutoCompleteModel>>($"autocomplete={query}");
             return new JavaScriptSerializer().Serialize(result);
         }
+
+        //public void AutoCompleteMovieTitles(string query)
+        //{
+        //    var result = new List<AutoCompleteModel>()
+        //    {
+        //        new AutoCompleteModel()
+        //        {
+        //            Title = "hello1",
+        //            ImageUrl = ""
+        //        },
+        //        new AutoCompleteModel()
+        //        {
+        //            Title = "hello2",
+        //            ImageUrl = ""
+        //        }
+        //    };
+        //    Response.Write(new JavaScriptSerializer().Serialize(result));
+        //}
     }
 }

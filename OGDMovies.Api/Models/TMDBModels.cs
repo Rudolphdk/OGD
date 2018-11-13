@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 using OGDMovies.Common.Models;
 
 namespace OGDMovies.Api.Models
@@ -24,9 +25,11 @@ namespace OGDMovies.Api.Models
             };
         }
 
-        public List<string> MapToAutoCompleteList()
+        //Get top 10 auto complete results
+        public List<AutoCompleteModel> MapToAutoCompleteList()
         {
-            return results.Select(s => s.title).ToList();
+            var autoCompleteList = results.Select(s => new AutoCompleteModel() { Title = s.title, ImageUrl = s.backdrop_path }).Take(10).ToList();
+            return autoCompleteList;
         }
     }
 
@@ -42,7 +45,7 @@ namespace OGDMovies.Api.Models
             {
                 if (string.IsNullOrEmpty(_backdrop_path))
                 {
-                    return "../Content/blank.jpg";
+                    return "../Content/blank_bd.jpg";
                 }
                 return $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{_backdrop_path}";
             }
@@ -67,7 +70,7 @@ namespace OGDMovies.Api.Models
             {
                 if (string.IsNullOrEmpty(_poster_path))
                 {
-                    return "../Content/blank.jpg";
+                    return "../Content/blank_poster.jpg";
                 }
                 return $"{System.Configuration.ConfigurationManager.AppSettings["TMDB_IMAGE_URL"]}{_poster_path}";
             }

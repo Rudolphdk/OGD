@@ -25,7 +25,7 @@ namespace OGDMovies.Api.ConnectionRepos
             Url = System.Configuration.ConfigurationManager.AppSettings["OMDB_API_URL"];
         }
 
-        public dynamic RetrieveData(string query, bool expectMultiple = false)
+        public dynamic RetrieveData(string query, bool expectMultiple = false, bool adult = false)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(Url);
@@ -54,7 +54,7 @@ namespace OGDMovies.Api.ConnectionRepos
             };
         }
 
-        public AggregatedModel GetMovieByTitle(string title, string page)
+        public AggregatedModel GetMovieByTitle(string title, string page = "1", bool adult = false)
         {
             var query = $"t={title}";
             var omdbModel = RetrieveData(query) as OmdbModel;
@@ -67,7 +67,7 @@ namespace OGDMovies.Api.ConnectionRepos
             };
         }
 
-        public List<string> GetTitleAutoComplete(string title)
+        public List<AutoCompleteModel> GetTitleAutoComplete(string title, bool adult = false)
         {
             throw new NotImplementedException();
         }

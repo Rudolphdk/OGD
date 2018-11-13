@@ -11,9 +11,9 @@ namespace OGDMovies.Api.ConnectionRepos
     {
         string Key { get; }
         string Url { get; }
-        dynamic RetrieveData(string query, bool expectMultiple);
+        dynamic RetrieveData(string query, bool expectMultiple, bool adult = false);
         AggregatedModel GetMovieById(string id);
-        AggregatedModel GetMovieByTitle(string title, string page = "1");
-        List<string> GetTitleAutoComplete(string title);
+        AggregatedModel GetMovieByTitle(string title, string page, bool adult = false);
+        List<AutoCompleteModel> GetTitleAutoComplete(string title, bool adult = false);
     }
 }

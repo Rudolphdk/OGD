@@ -116,7 +116,7 @@ namespace OGDMovies.Api.Controllers
             }
         }
 
-        public List<string> GetAutoComplete(string autocomplete)
+        public List<AutoCompleteModel> GetAutoComplete(string autocomplete)
         {
             var result = _tmdbConnection.GetTitleAutoComplete(autocomplete);
             return result;

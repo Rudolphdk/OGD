@@ -4,58 +4,26 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-        #topnav .search-container {
-            float: right;
-        }
-
-        #topnav #search {
-            padding: 6px;
-            margin-top: 8px;
-            font-size: 17px;
-            border: none;
-        }
-
-        #topnav .search-container button {
-            float: right;
-            padding: 6px 10px;
-            margin-top: 8px;
-            margin-right: 16px;
-            background: #ddd;
-            font-size: 17px;
-            border: none;
-            cursor: pointer;
-        }
-
-            #topnav .search-container button:hover {
-                background: #ccc;
-            }
-    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @LinkExtensions.ActionLink(Html, "OGD Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @LinkExtensions.ActionLink(Html, "Movie Database", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div id="topnav" class="navbar-collapse collapse">
-                <div class="search-container">
-                    <form method="post" action="@Url.Action("Search", "Home")">
-                        <input id="search" type="text" placeholder="Search.." name="query">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
                 <ul class="nav navbar-nav">
                     @{
                         //Dynamicaly add navigation links based on Enum. Show all except search
@@ -66,16 +34,31 @@
                             <li>@LinkExtensions.ActionLink(Html, CustomEnumHelper.DisplayNameFor(_enum), $"Relevance", new { relevance = movieRelevance })</li>
                         }
                     }
+                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li style="padding: 12px">
                         <div class="fb-login-button" data-max-rows="1" data-size="medium"
                              data-button-type="login_with" data-show-faces="false"
                              data-auto-logout-link="false" data-use-continue-as="true"></div>
                     </li>
+                    <li>
+                        <form method="post" action="@Url.Action("Search", "Home")" class="navbar-form">
+                            <div class="input-group">
+                                <input id="search" type="text" placeholder="Search.." name="query" class="form-control">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
                 </ul>
-
             </div>
         </div>
-    </div>
+    </nav>
+    <br/>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -88,8 +71,10 @@
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.2&appId=2175976735978710';
+            js = d.createElement(s);
+            js.id = id;
+            js.src =
+                'https://connect.facebook.net/en_US/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.2&appId=2175976735978710';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
@@ -124,9 +109,9 @@
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '2175976735978710',
-                cookie: true,  // enable cookies to allow the server to access
+                cookie: true, // enable cookies to allow the server to access
                 // the session
-                xfbml: true,  // parse social plugins on this page
+                xfbml: true, // parse social plugins on this page
                 version: 'v2.8' // use graph api version 2.8
             });
 
@@ -152,9 +137,10 @@
         // successful.  See statusChangeCallback() for when this call is made.
         function testAPI() {
             console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me', function (response) {
-                console.log('Successful login for: ' + response.name);
-            });
+            FB.api('/me',
+                function (response) {
+                    console.log('Successful login for: ' + response.name);
+                });
         }
     </script>
     @Scripts.Render("~/bundles/jquery")
@@ -162,28 +148,44 @@
     @RenderSection("scripts", required: false)
     <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js "></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script type="text/javascript">
-    var requestHeaders = {
-        "accept": "application/json;odata=verbose"
-    }
-    $("#search").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                dataType: 'json',
-                async: true,
-                headers: requestHeaders,
-                url: '@Url.Action("AutoCompleteMovieTitles", "Home")',
-                data: {
-                    query: request.term
-                },
-                success: function (data) {
-                    response(data);
+    $(document).ready(function() {
+        var requestHeaders = {
+            "accept": "application/json;odata=verbose"
+        }
+
+        function updateTextBox(event, ui) {
+            $(this).val(ui.item.Title);
+            return false;
+        }
+
+        $("#search").autocomplete({
+                minLength: 3,
+                focus: updateTextBox,
+                select: updateTextBox,
+                source: function(request, response) {
+                    $.ajax({
+                        url: '@Url.Action("AutoCompleteMovieTitles", "Home")',
+                        dataType: 'json',
+                        method: 'post',
+                        async: true,
+                        headers: requestHeaders,
+                        data: { query: request.term },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
                 }
-            });
-        },
-        minLength: 3
+            })
+            .autocomplete('instance')._renderItem = function(ul, item) {
+                return $('<li>')
+                    .append('<a><img class="thumbnail tmb" width="50%" src="' + item.ImageUrl + '" /><p><b>' + item.Title +'</b></p></a>')
+                    //.append('<a>' + item.Title + '</a>')
+                    .appendTo(ul);
+            }
     });
     </script>
-
 </body>
 </html>
